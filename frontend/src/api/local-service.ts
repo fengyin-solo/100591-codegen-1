@@ -5,6 +5,10 @@ import type { ActionResult, EntryRow, ModuleMeta, OverviewResult, PageResult } f
 // 会写进数据的「往回走」动作：命中就把这条记录标成异常态，看板上能一眼看出来。
 const NEGATIVE_ACTIONS = ['撤销', '作废', '拒绝', '驳回', '停用', '忽略', '下线', '回滚']
 
+// 工作票只能按「签发→许可→终结」顺序流转，由 ticket-service 专门把守；
+// 通用动作通道不做顺序判断，直接挡回，防止从这里跳环改状态。
+const TICKET_MODULE_KEY = 'ticket'
+
 export function moduleMeta(key: string): ModuleMeta {
   const meta = MODULE_BY_KEY.get(key)
   if (!meta) {
@@ -29,6 +33,9 @@ export function listEntries(key: string, filters: Record<string, string> = {}): 
 }
 
 export function runAction(key: string, id: number, action: string): ActionResult {
+  if (key === TICKET_MODULE_KEY) {
+    return { ok: false, message: '工作票状态只能按「签发→许可→终结」顺序流转，请在工作票页面办理，通用动作通道已挡回本次操作' }
+  }
   const meta = moduleMeta(key)
   const target = meta.actionTargets[action]
   if (!target) {

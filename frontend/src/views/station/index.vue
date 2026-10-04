@@ -79,10 +79,11 @@ import {
   moduleMeta,
   runAction as applyAction,
 } from '@/api/local-service'
+import { reconcileAllStationLedgers } from '@/api/ticket-service'
 import type { EntryRow } from '@/data/types'
 
 const meta = moduleMeta('station')
-const columns = ["电站编号", "电站名称", "装机容量", "并网电压等级", "投运日期", "所在区域", "运维负责人", "电站状态"]
+const columns = ["电站编号", "电站名称", "装机容量", "并网电压等级", "投运日期", "所在区域", "运维负责人", "电站状态", "停运检修记录", "待办台账"]
 const actions = ["确认投运", "登记限电", "申请停运检修"]
 const statuses = ["待投运", "运行中", "限电运行", "停运检修"]
 const stats = [{"label": "在运电站", "value": 0}, {"label": "装机总容量", "value": 0}, {"label": "限电电站", "value": 0}]
@@ -125,6 +126,8 @@ function runAction(action: string, row: EntryRow) {
 function reload() {
   errorMessage.value = ''
   try {
+    // 停运检修记录与待办台账是工作票的派生视图，展示前先按票对账，保证两处口径一致
+    reconcileAllStationLedgers()
     const payload = listEntries(meta.key, filters.value)
     rows.value = payload.items
     total.value = payload.total

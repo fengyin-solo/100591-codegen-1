@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import Dashboard from '@/views/Dashboard.vue'
 const Station = () => import('@/views/station/index.vue')
+const Ticket = () => import('@/views/ticket/index.vue')
 const Array = () => import('@/views/array/index.vue')
 const Inverter = () => import('@/views/inverter/index.vue')
 const Combiner = () => import('@/views/combiner/index.vue')
@@ -25,6 +26,7 @@ const router = createRouter({
   routes: [
     { path: '/', name: 'dashboard', component: Dashboard },
     { path: '/station', name: 'station', component: Station },
+    { path: '/ticket', name: 'ticket', component: Ticket },
     { path: '/array', name: 'array', component: Array },
     { path: '/inverter', name: 'inverter', component: Inverter },
     { path: '/combiner', name: 'combiner', component: Combiner },
