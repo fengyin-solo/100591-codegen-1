@@ -9,6 +9,7 @@ const Tracker = () => import('@/views/tracker/index.vue')
 const Cleaning = () => import('@/views/cleaning/index.vue')
 const Alarm = () => import('@/views/alarm/index.vue')
 const Defect = () => import('@/views/defect/index.vue')
+const Ticket = () => import('@/views/ticket/index.vue')
 const Patrol = () => import('@/views/patrol/index.vue')
 const Spare = () => import('@/views/spare/index.vue')
 const Meter = () => import('@/views/meter/index.vue')
@@ -32,6 +33,7 @@ const router = createRouter({
     { path: '/cleaning', name: 'cleaning', component: Cleaning },
     { path: '/alarm', name: 'alarm', component: Alarm },
     { path: '/defect', name: 'defect', component: Defect },
+    { path: '/ticket', name: 'ticket', component: Ticket },
     { path: '/patrol', name: 'patrol', component: Patrol },
     { path: '/spare', name: 'spare', component: Spare },
     { path: '/meter', name: 'meter', component: Meter },

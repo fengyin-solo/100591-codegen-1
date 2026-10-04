@@ -20,6 +20,17 @@ export type ModuleMeta = {
   metrics: string[]
 }
 
+export type TicketDraft = {
+  票号: string
+  所属电站: string
+  工作内容: string
+  工作负责人: string
+  签发人: string
+  许可人: string
+  安全措施: string
+  计划开工: string
+}
+
 export type PageResult = {
   items: EntryRow[]
   total: number
